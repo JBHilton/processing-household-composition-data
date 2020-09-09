@@ -4,6 +4,8 @@ The scripts in this repository construct histograms of age-stratified household 
 
 These scripts are primarily designed for processing the household data which is available from the UK's Office for National Statistics (ONS). The `preprocessing` subfolder is for scripts which reformat specific datasets to make them compatible with the rest of the code in the repository.
 
+## Glossary
+
 ## functions
 
 ### `filter_rare_households_ONS.m`
@@ -28,6 +30,6 @@ We stress that the system size calcualted by this function is that of a mean-fie
 
 ### `generate_england_wales_adult_child_population.m`
 
-This example demonstrates how to construct a single household composition distribution for the whole of England and Wales from the CT1088 data.
+This example demonstrates how to construct a single household composition distribution for the whole of England and Wales from the CT1088 and CT1089 data. We start by loading the two datasets and recasting them in terms of two age classes, one consisting of children (0-19 years old) and one consisting of adults (20+ years old). We do this by converting the composition columns of the household composition data tables to arrays, and then post-multiplying by a matrix which adds up all the entries in the "child" age classes and all the entries in the "adult" age classes in each row and create a new two-column array with each row consisting of these two sums. If we have *K* age classes and wish to merge these into *L* age classes then the required matrix will have dimensions *K* by *L* and will have element *(k,l)* equal to 1 if age class *k* is contained within age class *l* and 0 otherwise. Once we have recast the data in terms of two age classes, we combine the CT1088 and CT1089 data into a single table summarising the entirety of England and Wales, and apply `filter_rare_households_ONS` with a threshold of 0.05, which removes all households of size seven and higher (coincidentally, these are precisely the households in the CT1089 data). This filtered household data is then inputted to `build_HH_dist_from_ONS_data` with the resolution set to `ALL`, to create an England-and-Wales-level household composition distribution. We then apply `calculate_system_size` for a few illustrative numbers of compartments.
 
 ### `generate_england_wales_adult_child_vulnerable_population.m`
