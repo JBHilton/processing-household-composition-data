@@ -6,6 +6,10 @@ These scripts are primarily designed for processing the household data which is 
 
 ## Glossary
 
+## preprocessing
+
+The scripts in this folder are designed to gather and prepare household compostion data for use in the rest of the repository. Before running any of the examples using England-and-Wales data, you will need to first download and reformat this data. `download_CT1088_data` downloads the England-and-Wales household composition data available from the ONS (available manually from https://www.ons.gov.uk/searchdata?q=CT1088*&sortBy=relevance&q=CT1088* and https://www.ons.gov.uk/peoplepopulationandcommunity/housing/adhocs/11569ct10892011census) and saves it to a subfolder `data/CT1088_tables`. This script requires an internet connection. The CT1089 dataset, containing household composition data for households of size seven or more, is available as a single .xlsx file, whereas the CT1088 dataset, containing household composition data for households of size six or less, is split across thirteen .xlsx files, each containing multiple sheets. The script `combine_CT1088_tables` replaces the multi-sheet .xlsx files with .csv files which can be handled more efficiently by the other scripts in the repository. NOW TALK BENCHMARKING. `combine_CT1088_tables_par` carries out the same operations using parallel computing, and should therefore be substantially faster than `combine_CT1088_tables`. `combine_CT1088_tables_par` is set up to use four threads.
+
 ## functions
 
 ### `filter_rare_households_ONS.m`
