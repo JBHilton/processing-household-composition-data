@@ -15,7 +15,7 @@ weighted_sizes = hh_size_list.*hh_data.count;
 prop_by_size = zeros(max(hh_size_list),1);
 pop_size = sum(weighted_sizes);
 for i=1:max(hh_size_list)
-    prop_by_size(i) = sum(weighted_sizes(hh_size_list>=i))/pop_size;
+    prop_by_size(i) = sum(weighted_sizes(hh_size_list>=i))/pop_size; % Proportion of population in households of size i or greater
 end
 
 rare_bd = find(prop_by_size<p,1);

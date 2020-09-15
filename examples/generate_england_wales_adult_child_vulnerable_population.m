@@ -19,7 +19,7 @@
 addpath functions;
 
 % Load composition data
-hh_data = readtable('data/CT1088.csv');
+hh_data = load_CT1088();
 
 sba = 0.01*[0,1.08,1.63,2.57,4.47,7.53,10.72,13.98]; % Shielding by age class - 0-20, 10 year bands up to 70, 70-75, 75+
 

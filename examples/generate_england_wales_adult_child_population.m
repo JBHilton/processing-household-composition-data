@@ -6,8 +6,8 @@
 addpath functions;
 
 % Load composition data
-ct1088 = readtable('data/CT1088.csv');
-ct1089 = readtable('data/CT1089.csv');
+ct1088 = load_CT1088();
+ct1089 = readtable('data/CT1089.xlsx');
 
 % Merge age classes in CT1088 to get 0-19 and 20+ classes:
 ct1088_ind = [1 1 2 2 2 2 2 2 2]; % This specifies which new age class each old class maps to
