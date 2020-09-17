@@ -6,7 +6,41 @@ These scripts are primarily designed for processing the household data which is 
 
 ## Glossary
 
+### CT1088
+This is a dataset compiled by the ONS, containing ten-year age band composition data for all households of size six or fewer in England and Wales. Each data point consists of a spatial location, a household composition in terms of the number of people in each age class in a household, and the number of households of that composition in that location. Because of the large size of this dataset, it is separated into twelve multi-sheet Excel spreadsheets coresponding to different regions of England, and one for Wales.
+
+### CT1089
+This is the equivalent of the CT1088 dataset for households of size seven or more. The age bands in this dataset are 0-19 years, 20-69 years, and 70+ years. The composition data for all the output areas in England and Wales are stored in a single sheet.
+
+### Output areas (OAs) and Super Output Areas (SOAs)
+
+An output area is a spatial units used by the ONS. For our purposes, a single output area consists of all the households in a given set of postcodes. A Super Output Area (SOA) is an aggregation of output areas. There are different levels of SOA, with each one consisting of an aggregation of SOAs at the level below. In ascending size order, the different levels of SOA are lower layer super output area (LSOA), middle layer super output area (MSOA), local authority (LA), and country. For more information, see https://www.ons.gov.uk/census/2001censusandearlier/dataandproducts/outputgeography/outputareas and https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography#super-output-area-soa.
+
+## preprocessing
+
+The scripts in this folder are designed to gather and prepare household compostion data for use in the rest of the repository. Before running any of the examples using England-and-Wales data, you will need to first download and reformat this data. `download_CT1088_data` downloads the England-and-Wales household composition data available from the ONS (available manually from https://www.ons.gov.uk/searchdata?q=CT1088*&sortBy=relevance&q=CT1088* and https://www.ons.gov.uk/peoplepopulationandcommunity/housing/adhocs/11569ct10892011census) and saves it to a subfolder `data/CT1088_tables`. This script requires an internet connection. The CT1089 dataset, containing household composition data for households of size seven or more, is available as a single .xlsx file, whereas the CT1088 dataset, containing household composition data for households of size six or less, is split across thirteen .xlsx files, each containing multiple sheets. The script `combine_CT1088_tables` replaces the multi-sheet .xlsx files with .csv files which can be handled more efficiently by the other scripts in the repository. `combine_CT1088_tables_par` carries out the same operations using parallel computing, and should therefore be substantially faster than `combine_CT1088_tables`. `combine_CT1088_tables_par` is set up to use four threads. Without parallelisation, execution takes 226 minutes and 10 seconds; with four threads, this is reduced to 90 minutes and 8 seconds.
+
+To download the ONS household composition data and prepare it for use, run either
+```
+download_CT1088_data
+clear
+combine_CT1088_tables
+clear
+```
+or
+```
+download_CT1088_data
+clear
+combine_CT1088_tables_par
+clear
+```
+
+
 ## functions
+
+### `load_CT1088.m`
+
+This function loads the CT1088 tables into a single Matlab table. This contains household composition data for all the households of size six or fewer in the UK, to the finest spatial resolution available. It is not recommended that users attempt to save the combined table as a single .csv file, as its large size means writing to file will take an extremely long time.
 
 ### `filter_rare_households_ONS.m`
 
