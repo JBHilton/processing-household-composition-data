@@ -42,7 +42,6 @@ end
 
 
 disp('Reading tables from data files.')
-tic
 parfor(i=1:no_files,4)
     
     this_table = [];
@@ -51,17 +50,24 @@ parfor(i=1:no_files,4)
     for j=2:no_sheets(i)
         Sheet=ExcelWorkbook.Sheets.Item(j);
         Range=Sheet.UsedRange;
-        r=cell2table(Range.Value);
-        this_table = [this_table; r(2:end,1:end-1)];
+        r = (Range.Value(2:end,1:end-1));
+        LA = char(r(:,2));
+        r(:,2) = cellstr(LA(:,1:9));
+        this_table = [this_table; r];
     end
     ExcelWorkbook.Close;
     e.Quit;
     e.delete;
     
-    writetable(this_table, ['data/CT1088_tables/' new_filenames{i}], 'WriteVariableNames', 0);
+    writecell(this_table, ['data/CT1088_tables/' new_filenames{i}]);
     
     dir_now = dir('data/CT1088_tables');
     
     delete(filenames{i});
 end
-toc
+
+ct1089 = readtable('data/CT1089.xlsx','Sheet','CT1089');
+ct1089 = ct1089(:,1:9);
+ct1089.Properties.VariableNames{9}='count';
+writetable(ct1089,'data/CT1089.csv');
+delete('data/CT1089.xlsx');

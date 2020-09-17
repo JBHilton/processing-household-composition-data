@@ -39,9 +39,6 @@ disp('Reading tables from data files.')
 e=actxserver('Excel.Application');
 tic
 for i=1:no_files
-    %     for j=2:no_sheets(i)
-    %         CT1088 = [CT1088; readtable(filenames{i},'Sheet',sheets{i}{j})];
-    %     end
     
     new_filename = [filenames{i}(1:end-4) 'csv'];
     
@@ -51,12 +48,14 @@ for i=1:no_files
     for j=2:no_sheets(i)
         Sheet=ExcelWorkbook.Sheets.Item(j);
         Range=Sheet.UsedRange;
-        r=cell2table(Range.Value);
-        this_table = [this_table; r(2:end,1:end-1)];
+        r = (Range.Value(2:end,1:end-1));
+        LA = char(r(:,2));
+        r(:,2) = cellstr(LA(:,1:9));
+        this_table = [this_table; r];
     end
     ExcelWorkbook.Close;
     
-    writetable(this_table, new_filename, 'WriteVariableNames', 0);
+    writecell(this_table, new_filename);
     delete(filenames{i});
     
     elapsed = toc;
@@ -66,5 +65,12 @@ for i=1:no_files
         (total_sheets-cum_sheet_nos(i))/cum_sheet_nos(i))...
         ' minutes remaining.'])
 end
+
 e.Quit;
 e.delete;
+
+ct1089 = readtable('data/CT1089.xlsx','Sheet','CT1089');
+ct1089 = ct1089(:,1:9);
+ct1089.Properties.VariableNames{9}='count';
+writetable(ct1089,'data/CT1089.csv');
+delete('data/CT1089.xlsx');

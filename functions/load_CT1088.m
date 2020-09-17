@@ -21,6 +21,10 @@ for i=1:no_files
     ct1088 = [ct1088; readtable(filenames{i})];
 end
 
+ct1088.Properties.VariableNames = {'COUNTRY','LA','MSOA','LSOA','OA',...
+    'a0_9','a10_19','a20_29','a30_39','a40_49','a50_59','a60_69','a70_79',...
+    'a_80','count'};
+
 clear('listing','ht','filenames','no_files','i');
 
 end

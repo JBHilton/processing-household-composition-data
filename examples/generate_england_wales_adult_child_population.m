@@ -7,7 +7,7 @@ addpath functions;
 
 % Load composition data
 ct1088 = load_CT1088();
-ct1089 = readtable('data/CT1089.xlsx');
+ct1089 = readtable('data/CT1089.csv');
 
 % Merge age classes in CT1088 to get 0-19 and 20+ classes:
 ct1088_ind = [1 1 2 2 2 2 2 2 2]; % This specifies which new age class each old class maps to
@@ -16,6 +16,7 @@ ct1088_numstart = find(varfun(@isnumeric,ct1088,'OutputFormat','uniform'),1); % 
 merged_ct1088_data = [ct1088(:,1:ct1088_numstart-1)... We multiply the compositions by the merger matrix to convert to two-age-class compositions
     array2table(table2array(ct1088(:,ct1088_numstart:end-1))*ct1088_merger)...
     ct1088(:,end)];
+clear ct1088;
 
 % Merge age classes in CT1089 to get 0-19 and 20+ classes:
 ct1089_ind = [1 2 2]; % CT1089 only has three age classes
@@ -24,6 +25,7 @@ ct1089_numstart = find(varfun(@isnumeric,ct1089,'OutputFormat','uniform'),1);
 merged_ct1089_data = [ct1089(:,1:ct1089_numstart-1)...
     array2table(table2array(ct1089(:,ct1089_numstart:end-1))*ct1089_merger)...
     ct1089(:,end)];
+clear ct1089;
 
 merged_hh_data = [merged_ct1088_data; merged_ct1089_data]; % Combine merged data into a single table
 

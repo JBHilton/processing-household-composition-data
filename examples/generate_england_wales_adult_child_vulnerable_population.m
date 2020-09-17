@@ -30,6 +30,7 @@ numstart = find(varfun(@isnumeric,hh_data,'OutputFormat','uniform'),1); % This i
 merged_hh_data = [hh_data(:,1:numstart-1)...
     array2table(table2array(hh_data(:,numstart:end-1))*merger)...
     hh_data(:,end)];
+clear hh_data;
 
 [composition_list,composition_dist] =... % This composition list is in terms of the age classes from the shielding data
     build_hh_dist_from_ONS_data(merged_hh_data,'ALL');
