@@ -4,6 +4,8 @@ The scripts in this repository construct histograms of age-stratified household 
 
 These scripts are primarily designed for processing the household data which is available from the UK's Office for National Statistics (ONS). The `preprocessing` subfolder is for scripts which reformat specific datasets to make them compatible with the rest of the code in the repository.
 
+**Important note:** all the scripts are designed to be run from the main project repository, `.../processing-household-composition-data/`. When running the scripts, make sure to add the appropriate folders to your path. The command for adding the folder `folder` to your Matlab path is `addpath folder`.
+
 ## Glossary
 
 ### CT1088
@@ -22,6 +24,7 @@ The scripts in this folder are designed to gather and prepare household composti
 
 To download the ONS household composition data and prepare it for use, run either
 ```
+addpath preprocessing
 download_CT1088_data
 clear
 combine_CT1088_tables
@@ -29,6 +32,7 @@ clear
 ```
 or
 ```
+addpath preprocessing
 download_CT1088_data
 clear
 combine_CT1088_tables_par
@@ -58,9 +62,13 @@ Once a household composition distribution has been constructed, it is useful to 
 
 We stress that the system size calcualted by this function is that of a mean-field model of an infinite number of households, where the quantities simulated are the proportions of households in each composition and epidemiological state. The system size of a model of a finite number of households (for instance a network model) will be the product of the household-level system sizes, rather than the sum, with each household composition repeated in the product for every time it appears in the model population.
 
-## preprocessing
-
 ## examples
+
+The examples are designed to be run from the main repository. To run them, first run
+```
+addpath examples
+```
+and then call the example scripts.
 
 ### `generate_england_wales_adult_child_population.m`
 
