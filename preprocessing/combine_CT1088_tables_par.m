@@ -4,6 +4,7 @@
 
 addpath data;
 
+global total_sheets;
 
 disp('Finding dataset filenames.')
 listing=dir('data/CT1088_tables');
@@ -40,9 +41,17 @@ else
     save('data/sheet_details.mat','sheets','no_sheets','cum_sheet_nos','total_sheets');
 end
 
-
 disp('Reading tables from data files.')
-parfor(i=1:no_files,4)
+
+D = parallel.pool.DataQueue;
+afterEach(D,@display_progress);
+
+global sheets_done;
+sheets_done = 0;
+
+tic
+
+parfor(i=1:no_files)
     
     this_table = [];
     e=actxserver('Excel.Application');
@@ -64,10 +73,33 @@ parfor(i=1:no_files,4)
     dir_now = dir('data/CT1088_tables');
     
     delete(filenames{i});
+    
+    send(D,no_sheets(i));
 end
 
 ct1089 = readtable('data/CT1089.xlsx','Sheet','CT1089');
 ct1089 = ct1089(:,1:9);
+
 ct1089.Properties.VariableNames{9}='count';
 writetable(ct1089,'data/CT1089.csv');
 delete('data/CT1089.xlsx');
+
+clear sheets_done;
+clear total_sheets;
+
+function display_progress(no_sheets)
+
+global sheets_done
+global total_sheets
+
+sheets_done = sheets_done+no_sheets;
+elapsed_time=toc;
+
+disp([num2str(sheets_done) ' of ' num2str(total_sheets) ' sheets read in '...
+    num2str((1/60)*elapsed_time) ' minutes. Estimated '...
+    num2str((1/60)*elapsed_time*(total_sheets-sheets_done)/sheets_done)...
+    ' minutes remaining.'])
+
+return
+
+end
