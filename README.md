@@ -14,6 +14,10 @@ addpath examples
 ```
 to add the appropriate scripts to the path.
 
+To cite this code, use the following DOI: 10.5281/zenodo.4048649
+
+If you have any questions about the code, you can raise an Issue or contact Joe Hilton at j(dot)hilton(at)warwick(dot)ac(dot)uk.
+
 ## Glossary
 
 ### CT1088
