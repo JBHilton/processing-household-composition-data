@@ -17,7 +17,7 @@ to add the appropriate scripts to the path.
 Cite this code as:
 Hilton J (2020). JBHilton/processing-household-composition-data. [Data Collection]. Github. https://doi.org/10.5281/zenodo.4048649
 
-If you have any questions about the code, you can raise an Issue or contact Joe Hilton at j(dot)hilton(at)warwick(dot)ac(dot)uk.
+If you have any questions about the code, you can raise an Issue or contact Joe Hilton at joe(dot)hilton(at)gmail(dot)com.
 
 ## Glossary
 
